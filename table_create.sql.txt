@@ -1,0 +1,102 @@
+create table date_dimension(
+date_key int,
+date_ID int,
+date date,
+day int,
+month int,
+year int,
+month_name varchar,
+day_of_week_name varchar,
+week_num int,
+weekend bool,
+holiday bool,
+season varchar,
+day_in_week int,
+day_in_year int,
+primary key (date_key)
+);
+
+create table patient_dimension(
+patient_key int,
+patient_ID int,
+age_group varchar,
+gender varchar,
+case_acquisitionInfo varchar,
+outbreak_related bool,
+primary key (patient_key)
+);
+
+create table phu_dimension(
+phu_key int,
+phu_ID int,
+name varchar,
+address varchar,
+city varchar,
+postal_code varchar,
+province varchar,
+url varchar,
+latitude float,
+longitude float,
+primary key (phu_key)
+);
+
+create table mobility_dimension(
+mobility_key int,
+mobility_ID int,
+province varchar,
+subregion varchar,
+metro_area varchar,
+retail_and_recreation int,
+grocery_and_pharmacy int,
+parks int,
+transit_stations int,
+workplaces int,
+residential int,
+primary key (mobility_key)
+);
+
+create table weather_dimension(
+weather_key int,
+weather_ID int,
+max_temp float,
+mean_temp float,
+min_temp float,
+total_precipitation float,
+primary key (weather_key)
+);
+
+create table special_measures_dimension(
+special_measures_key int,
+special_measures_ID int,
+title varchar,
+description varchar,
+keyword_1 varchar,
+keyword_2 varchar,
+start_date date,
+end_date date,
+primary key (special_measures_key)
+);
+
+create table fact_table(
+onset_date_key int,
+reported_date_key int,
+test_date_key int,
+specimen_date_key int,
+patient_key int,
+phu_key int,
+mobility_key int,
+weather_key int,
+special_measures_key int,
+resolved bool,
+unresolved bool,
+fatal bool,
+foreign key  (onset_date_key) references date_dimension(date_key),
+foreign key  (reported_date_key) references date_dimension(date_key),
+foreign key  (test_date_key) references date_dimension(date_key),
+foreign key  (specimen_date_key) references date_dimension(date_key),
+foreign key  (patient_key) references patient_dimension(patient_key),
+foreign key  (phu_key) references phu_dimension(phu_key),
+foreign key  (mobility_key) references mobility_dimension(mobility_key),
+foreign key  (weather_key) references weather_dimension(weather_key),
+foreign key  (special_measures_key) references special_measures_dimension(special_measures_key)
+);
